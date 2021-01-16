@@ -57,11 +57,76 @@ EOF
 
 # 四、安装harbor服务
 
+## 1、下载harbor软件包
 ```bash
-#下载软件包
-wget https://github.com/goharbor/harbor/releases/download/v2.1.1/harbor-offline-installer-v2.1.1.tgz
-#解压
-tar xvf harbor-offline-installer-v2.1.1.tgz  -C /home/ && cd /home/harbor/
-#修改配置文件并创建对应目录
-
+[root@localhost ~]#wget https://github.com/goharbor/harbor/releases/download/v2.1.1/harbor-offline-installer-v2.1.1.tgz
 ```
+## 2、解压
+```bash
+[root@localhost ~]#tar xvf harbor-offline-installer-v2.1.1.tgz  -C /home/ && cd /home/harbor/
+```
+
+## 3、修改harbor.yml配置文件
+
+### 3.1 修改配置文件并创建对应目录
+```bash
+[root@localhost ~]#cd /home/harbor/
+[root@localhost harbor]#cp harbor.yml.tmpl harbor.yml
+[root@localhost harbor]#more harbor.yml|grep -v '#' 
+hostname: harbor.k8s
+
+https:
+  port: 443
+  certificate: /home/harbor/certs/harbor.crt
+  private_key: /home/harbor/certs/harbor.key
+  
+harbor_admin_password: jinlong
+
+database:
+  password: jinlong
+  max_idle_conns: 50
+  max_open_conns: 1000
+  
+data_volume: /home/harbor/data
+
+clair:
+  updaters_interval: 12
+
+trivy:
+  ignore_unfixed: false
+  skip_update: false
+  insecure: false
+
+jobservice:
+  max_job_workers: 10
+
+notification:
+  webhook_job_max_retry: 10
+
+chart:
+  absolute_url: disabled
+
+log:
+  level: info
+  local:
+    rotate_count: 50
+    rotate_size: 200M
+    location: /var/log/harbor
+	
+_version: 2.0.0
+
+proxy:
+  http_proxy:
+  https_proxy:
+  no_proxy:
+  components:
+    - core
+    - jobservice
+    - clair
+    - trivy
+```
+### 3.1 创建对应目录（根据配置文件修改）
+```bash
+[root@localhost ~]#mkdir -p /home/harbor/certs /home/harbor/data
+```
+
