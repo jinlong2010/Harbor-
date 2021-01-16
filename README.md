@@ -4,7 +4,7 @@
 [root@centos7 ~]# more /etc/hostname             
 master01
 ```
-#二、安装docker 服务
+# 二、安装docker 服务
 
 
 安装 Docker 服务并配置阿里云加速器
