@@ -53,5 +53,15 @@ EOF
 [root@localhost ~]#curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 [root@localhost ~]#chmod +x /usr/local/bin/docker-compose
 [root@localhost ~]#docker-compose -version
+```
+
+# 四、安装harbor服务
+
+```bash
+#下载软件包
+wget https://github.com/goharbor/harbor/releases/download/v2.1.1/harbor-offline-installer-v2.1.1.tgz
+#解压
+tar xvf harbor-offline-installer-v2.1.1.tgz  -C /home/ && cd /home/harbor/
+#修改配置文件并创建对应目录
 
 ```
