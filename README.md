@@ -1,4 +1,4 @@
-# 一、设置主机名称
+# 一、部署环境
 ```bash
 [root@localhost ~]# hostnamectl set-hostname harbor.k8s
 [root@localhost ~]# more /etc/hostname             
@@ -40,7 +40,18 @@ harbor.k8s
 }
 EOF
 
-[root@localhost ~]# systemctl daemon-reload
-[root@localhost ~]# systemctl restart docker
+[root@localhost ~]#systemctl daemon-reload
+[root@localhost ~]#systemctl restart docker
 ```
 修改cgroupdriver是为了消除告警： [WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
+
+
+# 三、安装docker-compose服务
+官方地址：https://github.com/docker/compose/releases
+
+```bash
+[root@localhost ~]#curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+[root@localhost ~]#chmod +x /usr/local/bin/docker-compose
+[root@localhost ~]#docker-compose -version
+
+```
