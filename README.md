@@ -125,8 +125,33 @@ proxy:
     - clair
     - trivy
 ```
-### 3.1 创建对应目录（根据配置文件修改）
+### 3.2 创建对应目录（根据配置文件修改）
 ```bash
-[root@localhost ~]#mkdir -p /home/harbor/certs /home/harbor/data
+[root@localhost harbor]#mkdir -p /home/harbor/certs /home/harbor/data
 ```
 
+## 4、OpenSSL生成自签证书
+```bash
+[root@localhost harbor]#openssl req -newkey rsa:4096 -nodes -sha256 -keyout /home/harbor/certs/harbor.key -x509 -out /home/harbor/certs/harbor.crt -subj /C=CN/ST=BJ/L=BJ/O=DEVOPS/CN=harbor.k8s -days 3650
+req 　　  产生证书签发申请命令
+-newkey  生成新私钥
+rsa:4096  生成秘钥位数
+-nodes   表示私钥不加密
+-sha256  使用SHA-2哈希算法
+-keyout  将新创建的私钥写入的文件名
+-x509 　　签发X.509格式证书命令。X.509是最通用的一种签名证书格式。
+-out 指定要写入的输出文件名
+-subj    指定用户信息
+-days    有效期（3650表示十年）
+
+[root@localhost harbor]#ls certs/
+harbor.crt  harbor.key
+```
+
+## 5、启动 harbor 服务
+```bash
+# 运行启动脚本
+[root@localhost ~]#./install.sh 
+```
+
+https://www.cnblogs.com/wangzy-tongq/p/14011228.html
